@@ -1,0 +1,20 @@
+{
+  "name": "sp-friends-api",
+  "version": "1.0.0",
+  "description": "SP Digital Friends API with Node, Express &amp; Mongoose, with Mocha and Chai for testing.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/abuuzayr/sp-friends-api.git"
+  },
+  "keywords": [],
+  "author": "@abuuzayr",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/abuuzayr/sp-friends-api/issues"
+  },
+  "homepage": "https://github.com/abuuzayr/sp-friends-api#readme"
+}
