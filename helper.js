@@ -3,10 +3,10 @@ let helper = {
         msg = 'string' === typeof msg 
             ? msg 
             : 'An unknown error occurred';
-        res.send({
+        res.status(500).send({
             error: true,
             error_msg: msg
-        })
+        });
     }
 }
 
