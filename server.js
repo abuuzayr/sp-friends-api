@@ -51,6 +51,21 @@ router.route('/link')
         }
     });
 
+// create a new route to block a friend (accessed via POST /friend/block)
+router.route('/block')
+    .post((req, res) => {
+        // check if request body sent has the information we need
+        if (req.body.requestor && req.body.target) {
+            friend.blockFriend(
+                req.body.requestor,
+                req.body.target,
+                res
+            );
+        } else {
+            helper.error(res, 'Invalid JSON body sent');
+        }
+    });
+
 // set up API base route
 app.use('/friends', router);
 
