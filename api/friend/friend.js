@@ -95,6 +95,7 @@ const getAllFriends = (email, res) => {
     });
 }
 
+// TODO: This should be in helper.js?
 /**
  * Common function to compare two friends
  *
@@ -165,6 +166,7 @@ const linkFriend = (first, second, res) => {
                 { '_id': ObjectId(f.id) },
                 { $push: { friends: s.id } },
                 () => {
+                    // TODO: DRY this
                     if (!s.friends.includes(f.id)) {
                         Friend.updateOne(
                             { '_id': ObjectId(s.id) },
@@ -175,6 +177,7 @@ const linkFriend = (first, second, res) => {
                 }
             );
         } else if (!s.friends.includes(f.id)) {
+            // TODO: DRY this
             Friend.updateOne(
                 { '_id': ObjectId(s.id) },
                 { $push: { friends: f.id } },
