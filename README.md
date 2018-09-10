@@ -70,7 +70,8 @@ User story: **As a user, I need an API to create a new friend.**
 
 Caught errors:
 
-- Invalid JSON body sent. 
+- Duplicate email - this user already exists
+- Invalid JSON body sent 
 
 ### 2. `/friends/link`
 
@@ -112,7 +113,7 @@ Caught errors:
 - These two email addresses are already friends. 
 - There are more than two email addresses provided. 
 - One of the email addresses has blocked the other from connecting as friends. 
-- Invalid JSON body sent. 
+- Invalid JSON body sent 
 
 ### 3. `/friends/:id`
 
@@ -153,7 +154,7 @@ User story: **2. As a user, I need an API to retrieve the friends list for an em
 Caught errors:
 
 - This email address does not exist. 
-- Invalid JSON body sent. 
+- Invalid JSON body sent 
 
 ### 4. `/friends/common`
 
@@ -198,7 +199,7 @@ User story: **3. As a user, I need an API to retrieve the common friends list be
 Caught errors:
 
 - One or both the email addresses do not exist. 
-- Invalid JSON body sent. 
+- Invalid JSON body sent 
 
 ### 5. `/friends/subscribe`
 
@@ -237,7 +238,7 @@ Caught errors:
 - The requestor email addresses does not exist. 
 - The target email addresses does not exist. 
 - The requestor email address has been blocked from subscribing to the target email address. 
-- Invalid JSON body sent. 
+- Invalid JSON body sent 
 
 ### 6. `/friends/block`
 
@@ -280,7 +281,7 @@ Caught errors:
 
 - The requestor email addresses does not exist. 
 - The target email addresses does not exist. 
-- Invalid JSON body sent. 
+- Invalid JSON body sent 
 
 ### 7. `/friends/recipients`
 
@@ -329,7 +330,7 @@ Eligibility for receiving updates from i.e. "john@example.com":
 Caught errors:
 
 - The sender email addresses does not exist. 
-- Invalid JSON body sent. 
+- Invalid JSON body sent 
 
 Deployment
 ----------
