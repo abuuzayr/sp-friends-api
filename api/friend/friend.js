@@ -61,8 +61,10 @@ const linkFriend = (first, second) => {
                 );
             }
             res.json({ success: true });
-        });
-    });
+        })
+        .catch((err) => helper.error(res, err))
+    })
+    .catch((err) => helper.error(res, err))
 };
 
 const blockFriend = (first, second) => {
