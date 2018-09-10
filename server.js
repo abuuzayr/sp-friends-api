@@ -51,7 +51,7 @@ router.route('/link')
         }
     });
 
-// create a new route to block a friend (accessed via POST /friend/block)
+// create route to block a friend (accessed via POST /friend/block)
 router.route('/block')
     .post((req, res) => {
         // check if request body sent has the information we need
@@ -66,12 +66,27 @@ router.route('/block')
         }
     });
 
-// create a new route to block a friend (accessed via POST /friend/block)
+// create route to return a list of friends (accessed via POST /friend/list)
 router.route('/list')
     .post((req, res) => {
         // check if request body sent has the information we need
         if (req.body.email) {
             friend.getAllFriends(req.body.email, res);
+        } else {
+            helper.error(res, 'Invalid JSON body sent');
+        }
+    });
+
+// create route to return common friends (accessed via POST /friend/common)
+router.route('/common')
+    .post((req, res) => {
+        // check if request body sent has the information we need
+        if (req.body.friends) {
+            friend.commonFriends(
+                req.body.friends[0],
+                req.body.friends[1],
+                res
+            );
         } else {
             helper.error(res, 'Invalid JSON body sent');
         }
