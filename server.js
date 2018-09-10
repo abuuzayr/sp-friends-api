@@ -109,6 +109,21 @@ router.route('/subscribe')
         }
     });
 
+// create route to get receipients to updates (accessed via POST /friend/recipients)
+router.route('/recipients')
+    .post((req, res) => {
+        // check if request body sent has the information we need
+        if (req.body.sender && req.body.text) {
+            friend.friendUpdate(
+                req.body.sender,
+                req.body.text,
+                res
+            );
+        } else {
+            helper.error(res, 'Invalid JSON body sent');
+        }
+    });
+
 // set up API base route
 app.use('/friends', router);
 
