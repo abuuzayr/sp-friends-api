@@ -53,9 +53,30 @@ const connectFriend = (first, second) => {
     });
 };
 
+const blockFriend = (first, second) => {
+    getFriendByEmail(first).then((firstFriend) => {
+        getFriendByEmail(second).then((secondFriend) => {
+            if (!(firstFriend && secondFriend)) {
+                return { status: 'Either friend does not exist' }
+            }
+            if (!firstFriend.blocks.includes(secondFriend.id)) {
+                firstFriend.update({
+                    blocks: firstFriend.blocks.push(secondFriend.id)
+                })
+            }
+            if (!secondFriend.blocks.includes(firstFriend.id)) {
+                secondFriend.update({
+                    blocks: secondFriend.blocks.push(firstFriend.id)
+                })
+            }
+        });
+    });
+};
+
 module.exports = {
     getFriend: getFriend,
     getFriendByEmail: getFriendByEmail,
     newFriend: newFriend,
-    connectFriend: connectFriend
+    connectFriend: connectFriend,
+    blockFriend: blockFriend
 };
