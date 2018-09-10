@@ -52,7 +52,42 @@ const newFriend = (email, res) => {
         } else {
             helper.error(
                 res,
-                'Duplicate email - this user already exists');
+                'Duplicate email - this user already exists'
+            );
+        }
+    })
+    .catch((err) => {
+        helper.error(res, err);
+    });
+}
+
+/**
+ * Get all friends of a friend
+ *
+ * @param {string} email email of the friend to retrieve
+ * @param {Object} res Express res object
+ */
+const getAllFriends = (email, res) => {
+    getFriendByEmail(email).then((friend) => {
+        if (friend) {
+            let friends = [];
+            friend.friends.forEach((v,k) => {
+                getFriend(v).then((friend) => {
+                    friends.push(friend.email);
+                    if (k === friend.friends.length - 1) {
+                        res.json({
+                            success: true,
+                            friends: friends,
+                            count: friends.length
+                        })
+                    }
+                })
+            })
+        } else {
+            helper.error(
+                res,
+                'This user does not exist'
+            );
         }
     })
     .catch((err) => {
@@ -125,6 +160,7 @@ module.exports = {
     getFriend: getFriend,
     getFriendByEmail: getFriendByEmail,
     newFriend: newFriend,
+    getAllFriends: getAllFriends,
     linkFriend: linkFriend,
     blockFriend: blockFriend
 };
