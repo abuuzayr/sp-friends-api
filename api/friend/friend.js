@@ -160,16 +160,16 @@ const commonFriends = (first, second, res) => {
  */
 const linkFriend = (first, second, res) => {
     compareFriends(first, second, res, (f, s, r) => {
-        if (!firstFriend.friends.includes(secondFriend.id)) {
+        if (!f.friends.includes(s.id)) {
             Friend.updateOne(
-                { '_id': ObjectId(firstFriend.id) },
-                { $push: { friends: secondFriend.id } },
+                { '_id': ObjectId(f.id) },
+                { $push: { friends: s.id } },
                 () => {
-                    if (!secondFriend.friends.includes(firstFriend.id)) {
+                    if (!s.friends.includes(f.id)) {
                         Friend.updateOne(
-                            { '_id': ObjectId(secondFriend.id) },
-                            { $push: { friends: firstFriend.id } },
-                            () => { res.json({ success: true }) }
+                            { '_id': ObjectId(s.id) },
+                            { $push: { friends: f.id } },
+                            () => { r.json({ success: true }) }
                         );
                     }
                 }
