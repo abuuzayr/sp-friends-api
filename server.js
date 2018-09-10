@@ -14,7 +14,8 @@ app.use(bodyParser.json());
 
 // set up mongoose
 mongoose.connect(
-    'mongodb://localhost:27017'
+    'mongodb://node:node@cluster0-shard-00-00-dhscv.mongodb.net:27017,cluster0-shard-00-01-dhscv.mongodb.net:27017,cluster0-shard-00-02-dhscv.mongodb.net:27017/admin?replicaSet=Cluster0-shard-0&ssl=true',
+    { dbName: 'friends', useNewUrlParser: true }
 ).catch(console.error);
 
 // set up API routes
