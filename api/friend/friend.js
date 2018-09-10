@@ -2,6 +2,7 @@ const Friend = require('./model');
 const helper = require('../../helper');
 const ObjectId = require('mongoose').Types.ObjectId;
 
+// TODO: Split methods to separate files for better maintenance
 /**
  * Get friend by ID
  *
@@ -220,11 +221,18 @@ const blockFriend = (requestor, target, res) => {
 const subscribeToFriend = (requestor, target, res) => {
     compareFriends(requestor, target, res, (r, t, res) => {
         if (!t.subscribers.includes(r.id)) {
-            Friend.updateOne(
-                { '_id': ObjectId(r.id) },
-                { $push: { subscribers: r.id } },
-                () => res.json({ success: true })
-            );
+            if (!t.blocks.includes(r.id)) {
+                Friend.updateOne(
+                    { '_id': ObjectId(t.id) },
+                    { $push: { subscribers: r.id } },
+                    () => res.json({ success: true })
+                )
+            } else {
+                helper.error(
+                    res,
+                    "The requestor email address has been blocked from subscribing to the target email address"
+                );
+            }
         } else {
             res.json({ success: true });
         }
