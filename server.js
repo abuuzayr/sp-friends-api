@@ -36,6 +36,21 @@ router.route('/new')
         }
     });
 
+// create a new friend link (accessed via POST /friend/link)
+router.route('/link')
+    .post((req, res) => {
+        // check if request body sent has the information we need
+        if (req.body.friends) {
+            friend.linkFriend(
+                req.body.friends[0],
+                req.body.friends[1],
+                res
+            );
+        } else {
+            helper.error(res, 'Invalid JSON body sent');
+        }
+    });
+
 // set up API base route
 app.use('/friends', router);
 
