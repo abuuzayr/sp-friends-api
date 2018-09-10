@@ -1,6 +1,12 @@
 const Friend = require('./model');
 const helper = require('../../helper');
 
+/**
+ * Get friend by ID
+ *
+ * @param {string} id ID of the friend to retrieve
+ * @return {Object} friend MongoDB object of the friend or false if error
+ */
 const getFriend = async (id) => {
     try {
         const friend = await Friend.findById(id);
@@ -10,6 +16,12 @@ const getFriend = async (id) => {
     }
 };
 
+/**
+ * Get friend by email
+ *
+ * @param {string} email email of the friend to retrieve
+ * @return {Object} friend MongoDB object of the friend or false if error
+ */
 const getFriendByEmail = async (email) => {
     try {
         const friend = await Friend.findOne({
@@ -21,6 +33,12 @@ const getFriendByEmail = async (email) => {
     }
 };
 
+/**
+ * Create a new friend if it does not already exist
+ *
+ * @param {string} email email of the friend to retrieve
+ * @param {Object} res Express res object
+ */
 const newFriend = (email, res) => {
     getFriendByEmail(email).then((friend) => {
         if (!friend) {
@@ -41,6 +59,13 @@ const newFriend = (email, res) => {
     });
 }
 
+/**
+ * Add a connection between two friends that are in the db
+ *
+ * @param {string} first first email of the friend to link
+ * @param {string} second second email of the friend to link
+ * @param {Object} res Express res object
+ */
 const linkFriend = (first, second, res) => {
     getFriendByEmail(first).then((firstFriend) => {
         getFriendByEmail(second).then((secondFriend) => {
@@ -67,6 +92,13 @@ const linkFriend = (first, second, res) => {
     .catch((err) => helper.error(res, err))
 };
 
+/**
+ * Add a connection between two friends that are in the db
+ *
+ * @param {string} requestor email of the requestor
+ * @param {string} target email of the friend to block
+ * @param {Object} res Express res object
+ */
 const blockFriend = (first, second) => {
     getFriendByEmail(first).then((firstFriend) => {
         getFriendByEmail(second).then((secondFriend) => {
