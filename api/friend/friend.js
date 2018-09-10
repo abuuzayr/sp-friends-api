@@ -58,6 +58,7 @@ const linkFriend = (first, second) => {
                     friends: secondFriend.friends.push(firstFriend.id)
                 })
             }
+            res.json({ success: true });
         });
     });
 };
