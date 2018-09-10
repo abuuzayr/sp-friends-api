@@ -120,6 +120,38 @@ const compareFriends = (first, second, res, callback) => {
 };
 
 /**
+ * Get common friends between two friends
+ *
+ * @param {string} first first email of the friend to link
+ * @param {string} second second email of the friend to link
+ * @param {Object} res Express res object
+ */
+const commonFriends = (first, second, res) => {
+    compareFriends(first, second, res, (f, s, r) => {
+        let commonArray = f.friends.filter((friend) => {
+            return s.friends.includes(friend)
+        })
+        if (commonArray.length) {
+            let commonArrayEmail = [];
+            commonArray.forEach((v, k) => {
+                getFriend(v).then((f) => {
+                    commonArrayEmail.push(f.email);
+                    if (k === commonArray.length - 1) {
+                        r.json({
+                            success: true,
+                            friends: commonArrayEmail,
+                            count: commonArray.length
+                        })
+                    }
+                });
+            })
+        } else {
+            helper.error(res, 'No common friends found');
+        }
+    })
+}
+
+/**
  * Add a connection between two friends that are in the db
  *
  * @param {string} first first email of the friend to link
@@ -177,6 +209,7 @@ module.exports = {
     getFriendByEmail: getFriendByEmail,
     newFriend: newFriend,
     getAllFriends: getAllFriends,
+    commonFriends: commonFriends,
     linkFriend: linkFriend,
     blockFriend: blockFriend
 };
