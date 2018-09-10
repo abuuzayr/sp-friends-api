@@ -1,5 +1,6 @@
 const Friend = require('./model');
 const helper = require('../../helper');
+const ObjectId = require('mongoose').Types.ObjectId;
 
 /**
  * Get friend by ID
