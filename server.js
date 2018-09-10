@@ -94,7 +94,7 @@ router.route('/common')
         }
     });
 
-// create route to block a friend (accessed via POST /friend/block)
+// create route to subscribe to a friend (accessed via POST /friend/subscribe)
 router.route('/subscribe')
     .post((req, res) => {
         // check if request body sent has the information we need
