@@ -33,8 +33,29 @@ const newFriend = (email, res) => {
     });
 }
 
+const connectFriend = (first, second) => {
+    getFriendByEmail(first).then((firstFriend) => {
+        getFriendByEmail(second).then((secondFriend) => {
+            if (!(firstFriend && secondFriend)) {
+                return { status: 'Either friend does not exist' }
+            }
+            if (!firstFriend.friends.includes(secondFriend.id)) {
+                firstFriend.update({
+                    friends: firstFriend.friends.push(secondFriend.id)
+                })
+            }
+            if (!secondFriend.friends.includes(firstFriend.id)) {
+                secondFriend.update({
+                    friends: secondFriend.friends.push(firstFriend.id)
+                })
+            }
+        });
+    });
+};
+
 module.exports = {
     getFriend: getFriend,
     getFriendByEmail: getFriendByEmail,
-    newFriend: newFriend
+    newFriend: newFriend,
+    connectFriend: connectFriend
 };
