@@ -3,7 +3,7 @@
 # Friends Management API Server
 SP Digital Friends API with Node, Express &amp; Mongoose, with Mocha and Chai for testing. 
 
-This API server is hosted on https://sp.builtforfifty.com/friends
+This API server is hosted on http://sp.builtforfifty.com/friends
 
 Repository for SP Digital Full Stack Engineer Assignment
 ========================================================
