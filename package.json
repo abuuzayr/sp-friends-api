@@ -4,7 +4,8 @@
   "description": "SP Digital Friends API with Node, Express &amp; Mongoose, with Mocha and Chai for testing.",
   "main": "server.js",
   "scripts": {
-    "test": "node ./node_modules/mocha/bin/mocha --exit"
+    "test": "node ./node_modules/mocha/bin/mocha --exit",
+    "start": "node server.js"
   },
   "repository": {
     "type": "git",
