@@ -248,6 +248,61 @@ const subscribeToFriend = (requestor, target, res) => {
 function extractEmails(text) {
     return text.match(/([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)/gi);
 }
+
+/**
+ * Get list of friends who are eligible for updates
+ *
+ * @param {string} sender email of the update sender
+ * @param {string} text text of the update
+ * @param {Object} res Express res object
+ */
+const friendUpdate = (sender, text, res) => {
+    getFriendByEmail(sender).then((friend) => {
+        if (friend) {
+            // init recipients array as all friends
+            let recipients = friend.friends;
+            let recipientEmails = [];
+            // get email from text
+            let mentioned = extractEmails(text);
+            mentioned.forEach((v, k) => {
+                getFriendByEmail(v).then((m) => {
+                    if (m) recipients.push(m);
+                    if (k === mentioned.length - 1) {
+                        // add subscribers to recipients
+                        friend.subscribers.forEach((subs) => {
+                            if (!recipients.includes(subs)) {
+                                recipients.push(subs);
+                            }
+                        })
+                        // remove blocked friends
+                        recipients = recipients.filter((each) => !friend.blocks.includes(each));
+                        // convert recipients to their emails
+                        recipients.forEach((val,key) => {
+                            getFriend(val).then((f) => {
+                                recipientEmails.push(f.email);
+                                if (key === recipients.length - 1) {
+                                    res.json({
+                                        success: true,
+                                        recipients: recipientEmails
+                                    })
+                                }
+                            })
+                        })
+                    }
+                })
+            })
+        } else {
+            helper.error(
+                res,
+                'This user does not exist'
+            );
+        }
+    })
+    .catch((err) => {
+        helper.error(res, err);
+    });
+};
+
 module.exports = {
     getFriend: getFriend,
     getFriendByEmail: getFriendByEmail,
@@ -256,5 +311,6 @@ module.exports = {
     commonFriends: commonFriends,
     linkFriend: linkFriend,
     blockFriend: blockFriend,
-    subscribeToFriend: subscribeToFriend
+    subscribeToFriend: subscribeToFriend,
+    friendUpdate: friendUpdate
 };
