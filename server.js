@@ -2,6 +2,8 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const friend = require('./api/friend');
+const helper = require('./helper');
 
 // initialise constants
 const app = express();
@@ -22,6 +24,17 @@ mongoose.connect(
 router.get('/', function (req, res) {
     res.status(200).json({ message: 'Friends API Status OK' });
 });
+
+// create a new friend/user (accessed via POST /friend/new)
+router.route('/new')
+    .post((req, res) => {
+        // check if request body sent has the information we need
+        if (req.body.email) {
+            friend.newFriend(req.body.email, res);
+        } else {
+            helper.error(res, 'Invalid JSON body sent');
+        }
+    });
 
 // set up API base route
 app.use('/friends', router);
