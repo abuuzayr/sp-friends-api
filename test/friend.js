@@ -52,4 +52,22 @@ describe('Friends', () => {
                 });
         });
     });
+
+    // test new friend success
+    describe('test /friends/new to create new friend', () => {
+        it('it should not create a friend and return success object', (done) => {
+            let friend = {
+                email: "test@example.com",
+            }
+            chai.request(server)
+                .post('/friends/new')
+                .send(friend)
+                .end((err, res) => {
+                    res.should.have.status(200);
+                    res.body.should.be.a('object');
+                    res.body.should.have.property('success').eql(true);
+                    done();
+                });
+        });
+    });
 });
