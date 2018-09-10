@@ -72,8 +72,8 @@ const getAllFriends = (email, res) => {
         if (friend) {
             let friends = [];
             friend.friends.forEach((v,k) => {
-                getFriend(v).then((friend) => {
-                    friends.push(friend.email);
+                getFriend(v).then((f) => {
+                    friends.push(f.email);
                     if (k === friend.friends.length - 1) {
                         res.json({
                             success: true,
