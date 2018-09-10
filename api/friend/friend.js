@@ -43,7 +43,7 @@ const getFriendByEmail = async (email) => {
 const newFriend = (email, res) => {
     getFriendByEmail(email).then((friend) => {
         if (!friend) {
-            new Friend({email}).save(err => {
+            new Friend({ email }).save(err => {
                 if (err) {
                     helper.error(res, err);
                 }
@@ -51,7 +51,7 @@ const newFriend = (email, res) => {
             })
         } else {
             helper.error(
-                res, 
+                res,
                 'Duplicate email - this user already exists');
         }
     })
@@ -77,16 +77,18 @@ const linkFriend = (first, second, res) => {
             if (!firstFriend.friends.includes(secondFriend.id)) {
                 Friend.updateOne(
                     { '_id': ObjectId(firstFriend.id) },
-                    { $push: { friends: secondFriend.id } }
+                    { $push: { friends: secondFriend.id } },
+                    () => {
+                        if (!secondFriend.friends.includes(firstFriend.id)) {
+                            Friend.updateOne(
+                                { '_id': ObjectId(secondFriend.id) },
+                                { $push: { friends: firstFriend.id } },
+                                () => { res.json({ success: true }) }
+                            );
+                        }
+                    }
                 );
             }
-            if (!secondFriend.friends.includes(firstFriend.id)) {
-                Friend.updateOne(
-                    { '_id': ObjectId(secondFriend.id) },
-                    { $push: { friends: firstFriend.id } }
-                );
-            }
-            res.json({ success: true });
         })
         .catch((err) => helper.error(res, err))
     })
@@ -109,14 +111,14 @@ const blockFriend = (requestor, target, res) => {
             if (!requestorFriend.blocks.includes(targetFriend.id)) {
                 Friend.updateOne(
                     { '_id': ObjectId(requestorFriend.id) },
-                    { $push: { blocks: targetFriend.id } }
+                    { $push: { blocks: targetFriend.id } },
+                    () => res.json({ success: true })
                 );
             }
-            res.json({ success: true });
         })
-            .catch((err) => helper.error(res, err))
-    })
         .catch((err) => helper.error(res, err))
+    })
+    .catch((err) => helper.error(res, err))
 };
 
 module.exports = {
