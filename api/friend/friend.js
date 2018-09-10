@@ -210,6 +210,27 @@ const blockFriend = (requestor, target, res) => {
     })
 };
 
+/**
+ * Allow a friend to subscribe to updates from another
+ *
+ * @param {string} requestor email of the requestor
+ * @param {string} target email of the friend to subscribe to
+ * @param {Object} res Express res object
+ */
+const subscribeToFriend = (requestor, target, res) => {
+    compareFriends(requestor, target, res, (r, t, res) => {
+        if (!t.subscribers.includes(r.id)) {
+            Friend.updateOne(
+                { '_id': ObjectId(r.id) },
+                { $push: { subscribers: r.id } },
+                () => res.json({ success: true })
+            );
+        } else {
+            res.json({ success: true });
+        }
+    })
+};
+
 module.exports = {
     getFriend: getFriend,
     getFriendByEmail: getFriendByEmail,
@@ -217,5 +238,6 @@ module.exports = {
     getAllFriends: getAllFriends,
     commonFriends: commonFriends,
     linkFriend: linkFriend,
-    blockFriend: blockFriend
+    blockFriend: blockFriend,
+    subscribeToFriend: subscribeToFriend
 };
