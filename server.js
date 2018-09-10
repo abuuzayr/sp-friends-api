@@ -130,3 +130,5 @@ app.use('/friends', router);
 // start server
 app.listen(port);
 console.log('Friends API server loaded on http://localhost:' + port);
+
+module.exports = app;
