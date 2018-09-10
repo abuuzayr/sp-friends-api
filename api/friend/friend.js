@@ -96,6 +96,30 @@ const getAllFriends = (email, res) => {
 }
 
 /**
+ * Common function to compare two friends
+ *
+ * @param {string} first first email of the friend to link
+ * @param {string} second second email of the friend to link
+ * @param {Object} res Express res object
+ * @param {Function} callback Callback function to call
+ */
+const compareFriends = (first, second, res, callback) => {
+    getFriendByEmail(first).then((firstFriend) => {
+        getFriendByEmail(second).then((secondFriend) => {
+            if (!(firstFriend && secondFriend)) {
+                helper.error(res, 'Either friend does not exist');
+                return
+            }
+            if (callback) {
+                callback(firstFriend, secondFriend, res);
+            }
+        })
+        .catch((err) => helper.error(res, err))
+    })
+    .catch((err) => helper.error(res, err))
+};
+
+/**
  * Add a connection between two friends that are in the db
  *
  * @param {string} first first email of the friend to link
@@ -103,31 +127,23 @@ const getAllFriends = (email, res) => {
  * @param {Object} res Express res object
  */
 const linkFriend = (first, second, res) => {
-    getFriendByEmail(first).then((firstFriend) => {
-        getFriendByEmail(second).then((secondFriend) => {
-            if (!(firstFriend && secondFriend)) {
-                helper.error(res, 'Either friend does not exist');
-                return
-            }
-            if (!firstFriend.friends.includes(secondFriend.id)) {
-                Friend.updateOne(
-                    { '_id': ObjectId(firstFriend.id) },
-                    { $push: { friends: secondFriend.id } },
-                    () => {
-                        if (!secondFriend.friends.includes(firstFriend.id)) {
-                            Friend.updateOne(
-                                { '_id': ObjectId(secondFriend.id) },
-                                { $push: { friends: firstFriend.id } },
-                                () => { res.json({ success: true }) }
-                            );
-                        }
+    compareFriends(first, second, res, (f, s, r) => {
+        if (!firstFriend.friends.includes(secondFriend.id)) {
+            Friend.updateOne(
+                { '_id': ObjectId(firstFriend.id) },
+                { $push: { friends: secondFriend.id } },
+                () => {
+                    if (!secondFriend.friends.includes(firstFriend.id)) {
+                        Friend.updateOne(
+                            { '_id': ObjectId(secondFriend.id) },
+                            { $push: { friends: firstFriend.id } },
+                            () => { res.json({ success: true }) }
+                        );
                     }
-                );
-            }
-        })
-        .catch((err) => helper.error(res, err))
+                }
+            );
+        }
     })
-    .catch((err) => helper.error(res, err))
 };
 
 /**
