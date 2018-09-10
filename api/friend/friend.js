@@ -45,7 +45,8 @@ const linkFriend = (first, second) => {
     getFriendByEmail(first).then((firstFriend) => {
         getFriendByEmail(second).then((secondFriend) => {
             if (!(firstFriend && secondFriend)) {
-                return { status: 'Either friend does not exist' }
+                helper.error(res, 'Either friend does not exist');
+                return
             }
             if (!firstFriend.friends.includes(secondFriend.id)) {
                 firstFriend.update({
