@@ -46,7 +46,7 @@ User story: **As a user, I need an API to create a new friend.**
 
 ```
 {
-  email: 'andy@example.com'
+  "email": "andy@example.com"
 }
 ```
 
@@ -82,10 +82,10 @@ User story: **As a user, I need an API to create a friend connection between two
 
 ```
 {
-  friends:
+  "friends":
     [
-      'andy@example.com',
-      'john@example.com'
+      "andy@example.com",
+      "john@example.com"
     ]
 }
 ```
@@ -124,7 +124,7 @@ User story: **2. As a user, I need an API to retrieve the friends list for an em
 
 ```
 {
-  email: 'andy@example.com'
+  "email": "andy@example.com"
 }
 ```
 
@@ -165,10 +165,10 @@ User story: **3. As a user, I need an API to retrieve the common friends list be
 
 ```
 {
-  friends:
+  "friends":
     [
-      'andy@example.com',
-      'john@example.com'
+      "andy@example.com",
+      "john@example.com"
     ]
 }
 ```
