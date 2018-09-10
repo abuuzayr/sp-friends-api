@@ -239,6 +239,15 @@ const subscribeToFriend = (requestor, target, res) => {
     })
 };
 
+/**
+ * Extract emails from string
+ *
+ * @param {string} text text to extract emails from
+ * @return {Array} array of emails extracted
+ */
+function extractEmails(text) {
+    return text.match(/([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)/gi);
+}
 module.exports = {
     getFriend: getFriend,
     getFriendByEmail: getFriendByEmail,
