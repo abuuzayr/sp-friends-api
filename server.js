@@ -20,7 +20,7 @@ mongoose.connect(
 
 // set up API routes
 router.get('/', function (req, res) {
-    res.sendStatus(200);
+    res.status(200).json({ message: 'Friends API Status OK' });
 });
 
 // set up API base route
