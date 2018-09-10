@@ -36,6 +36,7 @@ The below endpoints assume that basic validation is done on the front-end for:
 
 - email address validation
 - text provided in JSON body are escaped
+- JSON sent is valid JSON that follows acceptable JSON syntax
 
 ### 1. `/friends/new`
 
