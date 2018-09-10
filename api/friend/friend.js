@@ -49,14 +49,16 @@ const linkFriend = (first, second) => {
                 return
             }
             if (!firstFriend.friends.includes(secondFriend.id)) {
-                firstFriend.update({
-                    friends: firstFriend.friends.push(secondFriend.id)
-                })
+                Friend.updateOne(
+                    { '_id': ObjectId(firstFriend.id) },
+                    { $push: { friends: secondFriend.id } }
+                );
             }
             if (!secondFriend.friends.includes(firstFriend.id)) {
-                secondFriend.update({
-                    friends: secondFriend.friends.push(firstFriend.id)
-                })
+                Friend.updateOne(
+                    { '_id': ObjectId(secondFriend.id) },
+                    { $push: { friends: firstFriend.id } }
+                );
             }
             res.json({ success: true });
         });
