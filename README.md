@@ -29,6 +29,10 @@ A basic REST solution was sufficient for the requirements of this assignment. Th
 
 As Go is something I wish to be working with at some point in the future, I attempt a Go version of this implementation [here](https://github.com/abuuzayr/sp-friends-api-go).
 
+- [Swagger UI](https://swagger.io)
+
+Swagger is very useful for visualising and interacting with APIs. Unfortunately I only remembered about Swagger at the tail end of the timeboxed hours and was not able to add it in. 
+
 Endpoints
 ---------
 
@@ -116,7 +120,7 @@ Caught errors:
 - One of the email addresses has blocked the other from connecting as friends. 
 - Invalid JSON body sent 
 
-### 3. `/friends/:id`
+### 3. `/friends/list`
 
 User story: **2. As a user, I need an API to retrieve the friends list for an email address.**
 
