@@ -6,6 +6,14 @@ const getFriend = async (id) => {
     return friend
 };
 
+const getFriendByEmail = async (email) => {
+    const friend = await Friend.findOne({
+        'email': email
+    })
+    return friend
+};
+
 module.exports = {
-    getFriend: getFriend
+    getFriend: getFriend,
+    getFriendByEmail: getFriendByEmail
 };
