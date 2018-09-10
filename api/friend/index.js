@@ -4,6 +4,6 @@ module.exports = {
     getFriend: friend.getFriend,
     getFriendByEmail: friend.getFriendByEmail,
     newFriend: friend.newFriend,
-    connectFriend: friend.connectFriend,
+    linkFriend: friend.linkFriend,
     blockFriend: friend.blockFriend
 };

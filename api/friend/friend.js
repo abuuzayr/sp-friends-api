@@ -33,7 +33,7 @@ const newFriend = (email, res) => {
     });
 }
 
-const connectFriend = (first, second) => {
+const linkFriend = (first, second) => {
     getFriendByEmail(first).then((firstFriend) => {
         getFriendByEmail(second).then((secondFriend) => {
             if (!(firstFriend && secondFriend)) {
@@ -77,6 +77,6 @@ module.exports = {
     getFriend: getFriend,
     getFriendByEmail: getFriendByEmail,
     newFriend: newFriend,
-    connectFriend: connectFriend,
+    linkFriend: linkFriend,
     blockFriend: blockFriend
 };
