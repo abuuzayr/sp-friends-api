@@ -99,24 +99,23 @@ const linkFriend = (first, second, res) => {
  * @param {string} target email of the friend to block
  * @param {Object} res Express res object
  */
-const blockFriend = (first, second) => {
-    getFriendByEmail(first).then((firstFriend) => {
-        getFriendByEmail(second).then((secondFriend) => {
-            if (!(firstFriend && secondFriend)) {
+const blockFriend = (requestor, target, res) => {
+    getFriendByEmail(requestor).then((requestorFriend) => {
+        getFriendByEmail(target).then((targetFriend) => {
+            if (!(requestorFriend && targetFriend)) {
                 return { status: 'Either friend does not exist' }
             }
-            if (!firstFriend.blocks.includes(secondFriend.id)) {
-                firstFriend.update({
-                    blocks: firstFriend.blocks.push(secondFriend.id)
-                })
+            if (!requestorFriend.blocks.includes(targetFriend.id)) {
+                Friend.updateOne(
+                    { '_id': ObjectId(requestorFriend.id) },
+                    { $push: { blocks: targetFriend.id } }
+                );
             }
-            if (!secondFriend.blocks.includes(firstFriend.id)) {
-                secondFriend.update({
-                    blocks: secondFriend.blocks.push(firstFriend.id)
-                })
-            }
-        });
-    });
+            res.json({ success: true });
+        })
+            .catch((err) => helper.error(res, err))
+    })
+        .catch((err) => helper.error(res, err))
 };
 
 module.exports = {
