@@ -2,8 +2,12 @@ const Friend = require('./model');
 const helper = require('../../helper');
 
 const getFriend = async (id) => {
-    const friend = await Friend.findById(id);
-    return friend
+    try {
+        const friend = await Friend.findById(id);
+        return friend
+    } catch (err) {
+        return false
+    }
 };
 
 const getFriendByEmail = async (email) => {
