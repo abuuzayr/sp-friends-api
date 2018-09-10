@@ -3,8 +3,8 @@ const { Schema } = mongoose;
 
 const FriendSchema = new Schema({
     email: String,
-    friends: [Number],
-    blocks: [Number]
+    friends: [String],
+    blocks: [String]
 });
 
 module.exports = mongoose.model('Friend', FriendSchema);
