@@ -1,6 +1,7 @@
 // initialise dependencies
 const express = require('express');
 const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
 
 // initialise constants
 const app = express();
@@ -10,6 +11,11 @@ const router = express.Router();
 // setup app to use body-parser
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+
+// set up mongoose
+mongoose.connect(
+    'mongodb://localhost:27017'
+).catch(console.error);
 
 // set up API routes
 router.get('/', function (req, res) {
