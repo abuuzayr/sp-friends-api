@@ -174,6 +174,14 @@ const linkFriend = (first, second, res) => {
                     }
                 }
             );
+        } else if (!s.friends.includes(f.id)) {
+            Friend.updateOne(
+                { '_id': ObjectId(s.id) },
+                { $push: { friends: f.id } },
+                () => { r.json({ success: true }) }
+            );
+        } else {
+            r.json({ success: true });
         }
     })
 };
