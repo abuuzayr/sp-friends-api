@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.com/abuuzayr/sp-friends-api.svg?branch=master)](https://travis-ci.com/abuuzayr/sp-friends-api)
+
 # Friends Management API Server
 SP Digital Friends API with Node, Express &amp; Mongoose, with Mocha and Chai for testing. 
 
