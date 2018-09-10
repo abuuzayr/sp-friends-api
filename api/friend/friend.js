@@ -41,7 +41,7 @@ const newFriend = (email, res) => {
     });
 }
 
-const linkFriend = (first, second) => {
+const linkFriend = (first, second, res) => {
     getFriendByEmail(first).then((firstFriend) => {
         getFriendByEmail(second).then((secondFriend) => {
             if (!(firstFriend && secondFriend)) {
