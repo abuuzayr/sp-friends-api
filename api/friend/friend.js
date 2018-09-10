@@ -7,10 +7,14 @@ const getFriend = async (id) => {
 };
 
 const getFriendByEmail = async (email) => {
-    const friend = await Friend.findOne({
-        'email': email
-    })
-    return friend
+    try {
+        const friend = await Friend.findOne({
+            'email': email
+        })
+        return friend
+    } catch (err) {
+        return false
+    }
 };
 
 const newFriend = (email, res) => {
