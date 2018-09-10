@@ -40,10 +40,11 @@ router.route('/new')
 router.route('/link')
     .post((req, res) => {
         // check if request body sent has the information we need
-        if (req.body.friends) {
+        let friends = req.body.friends;
+        if (friends && friends.constructor === Array && 2 === friends.length) {
             friend.linkFriend(
-                req.body.friends[0],
-                req.body.friends[1],
+                friends[0],
+                friends[1],
                 res
             );
         } else {
@@ -81,10 +82,11 @@ router.route('/list')
 router.route('/common')
     .post((req, res) => {
         // check if request body sent has the information we need
-        if (req.body.friends) {
+        let friends = req.body.friends;
+        if (friends && friends.constructor === Array && 2 === friends.length) {
             friend.commonFriends(
-                req.body.friends[0],
-                req.body.friends[1],
+                friends[0],
+                friends[1],
                 res
             );
         } else {
